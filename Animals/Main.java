@@ -23,6 +23,7 @@ public class Main {
         System.out.println("2. Вывести данные о животных");
         System.out.println("3. Обучить животное новой команде");
         System.out.println("4. Показать общее количество животных");
+        System.out.println("5. Обновить данные о животном");
         System.out.println("0. Выход");
     }
 
@@ -44,12 +45,4 @@ public class Main {
                 animalRegistry.trainAnimal(scanner);
                 break;
             case 4:
-                animalRegistry.displayAnimalCount();
-                break;
-            case 0:
-                break;
-            default:
-                System.out.println("Неверный выбор. Попробуйте снова.");
-        }
-    }
-}
+                animalRegistry.displayAnimal

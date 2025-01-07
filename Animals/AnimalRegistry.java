@@ -9,6 +9,7 @@ public class AnimalRegistry {
     private int animalCount = 0;
 
     public void loadAnimals() {
+        System.out.println("Текущий рабочий каталог: " + new File(".").getAbsolutePath());
         try (BufferedReader br = new BufferedReader(new FileReader(FILE_NAME))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -97,6 +98,7 @@ public class AnimalRegistry {
             System.out.println("Животное с таким ID не найдено.");
         }
     }
+
     private Animal findAnimalById(int id) {
         for (Animal animal : animals) {
             if (animal.getId() == id) {
@@ -108,6 +110,39 @@ public class AnimalRegistry {
 
     public void displayAnimalCount() {
         System.out.println("Общее количество животных: " + animalCount);
+    }
+
+    public void updateAnimal(Scanner scanner) {
+        System.out.print("Введите ID животного для обновления: ");
+        int id = scanner.nextInt();
+        scanner.nextLine(); // consume newline
+        Animal animal = findAnimalById(id);
+        
+        if (animal != null) {
+            System.out.println("Текущие данные: " + animal);
+            System.out.print("Введите новое имя (или нажмите Enter для сохранения текущего): ");
+            String newName = scanner.nextLine();
+            if (!newName.isEmpty()) {
+                animal.setName(newName);
+            }
+
+            System.out.print("Введите новую дату рождения (или нажмите Enter для сохранения текущей): ");
+            String newBirthDate = scanner.nextLine();
+            if (!newBirthDate.isEmpty()) {
+                animal.setBirthDate(newBirthDate);
+            }
+
+            System.out.print("Введите новые команды (через запятую, или нажмите Enter для сохранения текущих): ");
+            String newCommandsInput = scanner.nextLine();
+            if (!newCommandsInput.isEmpty()) {
+                List<String> newCommands = List.of(newCommandsInput.split(", "));
+                animal.setCommands(newCommands);
+            }
+
+            System.out.println("Данные животного обновлены.");
+        } else {
+            System.out.println("Животное с таким ID не найдено.");
+        }
     }
 }
 

@@ -23,12 +23,24 @@ public class Animal {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getBirthDate() {
         return birthDate;
     }
 
+    public void setBirthDate(String birthDate) {
+        this.birthDate = birthDate;
+    }
+
     public List<String> getCommands() {
         return commands;
+    }
+
+    public void setCommands(List<String> commands) {
+        this.commands = commands;
     }
 
     public String getType() {
