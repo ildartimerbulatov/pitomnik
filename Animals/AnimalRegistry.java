@@ -1,16 +1,16 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 public class AnimalRegistry {
     // Список животных
     private static List<Animal> animals = new ArrayList<>();
-    // Счетчик животных
-    private static int animalCount = 0;
 
     public static void main(String[] args) {
+        // Загрузка животных из файла
+        loadAnimalsFromFile("Human Friends.txt");
+
+        // Меню
         try (Scanner scanner = new Scanner(System.in)) {
-            // Меню
             while (true) {
                 System.out.println("Меню:");
                 System.out.println("1. Показать всех животных");
@@ -44,12 +44,36 @@ public class AnimalRegistry {
                 }
             }
         } catch (Exception e) {
-            System.out.println("Ошибка: " + e.getMessage()); // Исправлено getMessa на getMessage
+            System.out.println("Ошибка: " + e.getMessage());
         }
     }
 
-    // Метод для отображения всех животных
-    private static void showAllAnimals() {
+    private static void loadAnimalsFromFile(String filename) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                if (!line.trim().isEmpty()) {
+                    String[] parts = line.split(","); // Разделение строки по запятой
+
+                    // Пример создания объекта Animal и добавления в список
+                    if (parts.length >= 5) {  // Убедитесь, что строка имеет достаточно данных
+                        String id = parts[0].trim();
+                        String name = parts[1].trim();
+                        String birthDate = parts[2].trim();
+                        String commands = parts[3].trim();
+                        String type = parts[4].trim();
+
+                        // Создание и добавление объекта Animal
+                        animals.add(new Animal(id, name, birthDate, commands, type));
+                    }
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Ошибка при чтении файла: " + e.getMessage());
+        }
+    }
+
+    public static void showAllAnimals() {
         if (animals.isEmpty()) {
             System.out.println("Нет животных для отображения.");
         } else {
@@ -59,45 +83,76 @@ public class AnimalRegistry {
         }
     }
 
-    // Метод для добавления нового животного
-    private static void addNewAnimal(Scanner scanner) {
+    public static void addNewAnimal(Scanner scanner) {
+        System.out.print("Введите ID животного: ");
+        String id = scanner.nextLine();
         System.out.print("Введите имя животного: ");
         String name = scanner.nextLine();
-        System.out.print("Введите тип животного (например, собака, кошка): ");
+        System.out.print("Введите дату рождения животного (yyyy-MM-dd): ");
+        String birthDate = scanner.nextLine();
+        System.out.print("Введите команды для животного (через запятую): ");
+        String commands = scanner.nextLine();
+        System.out.print("Введите тип животного: ");
         String type = scanner.nextLine();
-        Animal newAnimal = new Animal(animalCount, name, type, type, type);
-        animals.add(newAnimal);
-        animalCount++;
-        System.out.println("Животное добавлено: " + newAnimal);
+
+        animals.add(new Animal(id, name, birthDate, commands, type));
+        System.out.println("Животное добавлено.");
     }
 
-    // Метод для обучения животного новой команде
-    private static void teachAnimalNewCommand(Scanner scanner) {
-        System.out.print("Введите имя животного: ");
-        String name = scanner.nextLine();
-        Animal animal = findAnimalByName(name);
+    public static void teachAnimalNewCommand(Scanner scanner) {
+        System.out.print("Введите ID животного для обучения новой команде: ");
+        String id = scanner.nextLine();
+
+        Animal animal = findAnimalById(id);
         if (animal != null) {
-            System.out.print("Введите новую команду: ");
-            String command = scanner.nextLine();
-            animal.addCommand(command);
-            System.out.println("Животное теперь выполняет команду: " + command);
+            System.out.print("Введите новую команду для животного: ");
+            String newCommand = scanner.nextLine();
+            animal.addCommand(newCommand);
+            System.out.println("Животное обучено новой команде.");
         } else {
-            System.out.println("Животное не найдено.");
+            System.out.println("Животное с таким ID не найдено.");
         }
     }
 
-    // Метод для поиска животного по имени
-    private static Animal findAnimalByName(String name) {
+    public static void showAnimalCount() {
+        System.out.println("Количество животных: " + animals.size());
+    }
+
+    private static Animal findAnimalById(String id) {
         for (Animal animal : animals) {
-            if (animal.getName().equalsIgnoreCase(name)) {
+            if (animal.getId().equals(id)) {
                 return animal;
             }
         }
         return null;
     }
+}
 
-    // Метод для отображения количества животных
-    private static void showAnimalCount() {
-        System.out.println("Количество животных: " + animalCount);
+class Animal {
+    private String id;
+    private String name;
+    private String birthDate;
+    private List<String> commands;
+    private String type;
+
+    public Animal(String id, String name, String birthDate, String commands, String type) {
+        this.id = id;
+        this.name = name;
+        this.birthDate = birthDate;
+        this.commands = new ArrayList<>(Arrays.asList(commands.split(",")));
+        this.type = type;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void addCommand(String command) {
+        commands.add(command);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("ID: %s, Name: %s, Birth Date: %s, Commands: %s, Type: %s", id, name, birthDate, String.join(", ", commands), type);
     }
 }
