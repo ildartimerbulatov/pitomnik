@@ -1,0 +1,1 @@
+MYSQL_PASSWORD = "YorheRus2019"

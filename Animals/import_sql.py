@@ -1,11 +1,12 @@
 import mysql.connector
+from config import MYSQL_PASSWORD  # Импортируйте пароль из файла конфигурации
 
 # Подключение к базе данных
 conn = mysql.connector.connect(
     host='localhost',
-    user='your_username',  # Замените на ваше имя пользователя
-    password='your_password',  # Замените на ваш пароль
-    database='your_database'  # Замените на вашу базу данных
+    user='root',  # Замените на ваше имя пользователя
+    password=MYSQL_PASSWORD,  # Используйте пароль из файла конфигурации
+    database='human friends'  # Замените на вашу базу данных
 )
 
 cursor = conn.cursor()
