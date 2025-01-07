@@ -7,7 +7,7 @@ public class AnimalRegistry {
 
     public static void main(String[] args) {
         // Загрузка животных из файла
-        loadAnimalsFromFile("Human Friends.txt");
+        loadAnimalsFromFile("C:/Users/ildar/OneDrive/Desktop/pitomnik/Animals/Human Friends.txt");
 
         // Меню
         try (Scanner scanner = new Scanner(System.in)) {
@@ -55,7 +55,6 @@ public class AnimalRegistry {
                 if (!line.trim().isEmpty()) {
                     String[] parts = line.split(","); // Разделение строки по запятой
 
-                    // Пример создания объекта Animal и добавления в список
                     if (parts.length >= 5) {  // Убедитесь, что строка имеет достаточно данных
                         String id = parts[0].trim();
                         String name = parts[1].trim();
@@ -125,34 +124,5 @@ public class AnimalRegistry {
             }
         }
         return null;
-    }
-}
-
-class Animal {
-    private String id;
-    private String name;
-    private String birthDate;
-    private List<String> commands;
-    private String type;
-
-    public Animal(String id, String name, String birthDate, String commands, String type) {
-        this.id = id;
-        this.name = name;
-        this.birthDate = birthDate;
-        this.commands = new ArrayList<>(Arrays.asList(commands.split(",")));
-        this.type = type;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void addCommand(String command) {
-        commands.add(command);
-    }
-
-    @Override
-    public String toString() {
-        return String.format("ID: %s, Name: %s, Birth Date: %s, Commands: %s, Type: %s", id, name, birthDate, String.join(", ", commands), type);
     }
 }

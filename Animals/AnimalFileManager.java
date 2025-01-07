@@ -3,7 +3,7 @@ import java.nio.file.*;
 import java.util.*;
 
 public class AnimalFileManager {
-    private static final String FILE_PATH = "Animals/Human Friends.txt";
+    private static final String FILE_PATH = "C:/Users/ildar/OneDrive/Desktop/pitomnik/Animals/Human Friends.txt";  // абсолютный путь
 
     // Считать животных из файла
     public static List<Animal> readAnimals() {
@@ -15,20 +15,22 @@ public class AnimalFileManager {
                 if (line.startsWith("id,")) {
                     continue;
                 }
-    
-                // Очищаем строку от некорректных символов
+
+                // Очищаем строку от некорректных символов (если нужно, но имейте в виду возможные проблемы с кодировкой)
                 line = line.replaceAll("[^\\x00-\\x7F]", "");  // Удаляем все не-ASCII символы
-    
+
                 // Убираем лишние пробелы и разделяем строку
                 String[] parts = line.trim().split("\\s*,\\s*");
                 if (parts.length == 5) {
                     animals.add(new Animal(
-                        Integer.parseInt(parts[0]),
-                        parts[1],
-                        parts[2],
-                        parts[3],
-                        parts[4]
+                        parts[0].trim(), // ID теперь строка
+                        parts[1].trim(),
+                        parts[2].trim(),
+                        parts[3].trim(),
+                        parts[4].trim()
                     ));
+                } else {
+                    System.out.println("Неверный формат данных: " + line);
                 }
             }
         } catch (IOException e) {
@@ -38,7 +40,7 @@ public class AnimalFileManager {
         }
         return animals;
     }
- 
+
     // Добавить животное в файл
     public static void addAnimal(Animal animal) {
         try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(FILE_PATH), StandardOpenOption.APPEND)) {

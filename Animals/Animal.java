@@ -1,33 +1,34 @@
+import java.util.*;
+
 public class Animal {
-    private int id;
+    private String id; // Изменили тип на String
     private String name;
     private String birthDate;
-    private String commands;
-    private String species;
+    private List<String> commands;
+    private String type;
 
-    public Animal(int id, String name, String birthDate, String commands, String species) {
+    public Animal(String id, String name, String birthDate, String commands, String type) {
         this.id = id;
         this.name = name;
         this.birthDate = birthDate;
-        this.commands = commands;
-        this.species = species;
+        this.commands = new ArrayList<>(Arrays.asList(commands.split(",")));
+        this.type = type;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void addCommand(String newCommand) {
-        this.commands += ", " + newCommand;
+    public void addCommand(String command) {
+        commands.add(command);
+    }
+
+    public String getName() {
+        return name;  // Исправлено
     }
 
     @Override
     public String toString() {
-        return id + ", " + name + ", " + birthDate + ", " + commands + ", " + species;
-    }
-
-    public String getName() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getName'");
+        return String.format("ID: %s, Name: %s, Birth Date: %s, Commands: %s, Type: %s", id, name, birthDate, String.join(", ", commands), type);
     }
 }
