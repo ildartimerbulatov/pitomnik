@@ -3,7 +3,7 @@ import java.nio.file.*;
 import java.util.*;
 
 public class AnimalFileManager {
-    private static final String FILE_PATH = "C:/Users/ildar/OneDrive/Desktop/pitomnik/Animals/Human Friends.txt";  // абсолютный путь
+    private static final String FILE_PATH = "C:/Users/ildar/OneDrive/Desktop/pitomnik/Animals/Human_Friends.csv";  // абсолютный путь
 
     // Считать животных из файла
     public static List<Animal> readAnimals() {
@@ -15,9 +15,6 @@ public class AnimalFileManager {
                 if (line.startsWith("id,")) {
                     continue;
                 }
-
-                // Очищаем строку от некорректных символов (если нужно, но имейте в виду возможные проблемы с кодировкой)
-                line = line.replaceAll("[^\\x00-\\x7F]", "");  // Удаляем все не-ASCII символы
 
                 // Убираем лишние пробелы и разделяем строку
                 String[] parts = line.trim().split("\\s*,\\s*");
@@ -43,7 +40,7 @@ public class AnimalFileManager {
 
     // Добавить животное в файл
     public static void addAnimal(Animal animal) {
-        try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(FILE_PATH), StandardOpenOption.APPEND)) {
+        try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(FILE_PATH), StandardOpenOption.APPEND, StandardOpenOption.CREATE)) {
             writer.write(animal.toString());
             writer.newLine();
         } catch (IOException e) {
@@ -57,7 +54,13 @@ public class AnimalFileManager {
             writer.write("id, name, birth_date, commands, вид");
             writer.newLine();
             for (Animal animal : animals) {
-                writer.write(animal.toString());
+                // Записываем животное в формате "ID, имя, дата рождения, команды, вид"
+                writer.write(String.format("%s, %s, %s, \"%s\", %s", 
+                    animal.getId(), 
+                    animal.getName(), 
+                    animal.getBirthDate(), 
+                    String.join(", ", animal.getCommands()),  // Преобразуем список команд в строку
+                    animal.getType()));
                 writer.newLine();
             }
         } catch (IOException e) {

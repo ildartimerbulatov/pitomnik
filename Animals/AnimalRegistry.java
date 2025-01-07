@@ -7,7 +7,7 @@ public class AnimalRegistry {
 
     public static void main(String[] args) {
         // Загрузка животных из файла
-        loadAnimalsFromFile("C:/Users/ildar/OneDrive/Desktop/pitomnik/Animals/Human Friends.txt");
+        loadAnimalsFromFile("C:/Users/ildar/OneDrive/Desktop/pitomnik/Animals/Human_Friends.csv");
 
         // Меню
         try (Scanner scanner = new Scanner(System.in)) {
@@ -94,7 +94,15 @@ public class AnimalRegistry {
         System.out.print("Введите тип животного: ");
         String type = scanner.nextLine();
 
-        animals.add(new Animal(id, name, birthDate, commands, type));
+        // Удаление лишних пробелов и кавычек
+        commands = commands.replaceAll("\"", "").trim();
+
+        Animal newAnimal = new Animal(id, name, birthDate, commands, type);
+        animals.add(newAnimal);  // Добавляем новое животное в список
+
+        // Сохраняем в файл
+        AnimalFileManager.saveAnimals(animals);
+
         System.out.println("Животное добавлено.");
     }
 
