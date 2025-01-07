@@ -1,5 +1,5 @@
 import mysql.connector
-from config import MYSQL_PASSWORD  # Импортируйте пароль из файла конфигурации
+from Animals.config import MYSQL_PASSWORD  # Импортируйте пароль из файла конфигурации
 
 # Подключение к базе данных
 conn = mysql.connector.connect(
