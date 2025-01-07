@@ -32,14 +32,11 @@ public class AnimalFileManager {
         return animals;
     }
 
-    public static void writeAnimals(List<Animal> animals) {
-        try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(FILE_PATH))) {
-            for (Animal animal : animals) {
-                writer.write(animal.toString());
-                writer.newLine();
-            }
-        } catch (IOException e) {
-            System.out.println("Ошибка при записи в файл: " + e.getMessage());
+    public static void main(String[] args) {
+        List<Animal> animals = readAnimals();
+        System.out.println("Список животных из файла:");
+        for (Animal animal : animals) {
+            System.out.println(animal);
         }
     }
 }
