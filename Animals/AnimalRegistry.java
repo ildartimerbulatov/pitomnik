@@ -65,7 +65,7 @@ public class AnimalRegistry {
         String name = scanner.nextLine();
         System.out.print("Введите тип животного (например, собака, кошка): ");
         String type = scanner.nextLine();
-        Animal newAnimal = new Animal(name, type);
+        Animal newAnimal = new Animal(animalCount, name, type, type, type);
         animals.add(newAnimal);
         animalCount++;
         System.out.println("Животное добавлено: " + newAnimal);

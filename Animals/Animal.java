@@ -25,4 +25,9 @@ public class Animal {
     public String toString() {
         return id + ", " + name + ", " + birthDate + ", " + commands + ", " + species;
     }
+
+    public String getName() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getName'");
+    }
 }
