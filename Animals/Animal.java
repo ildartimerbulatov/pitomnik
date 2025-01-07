@@ -3,34 +3,18 @@ public class Animal {
     private String name;
     private String birthDate;
     private String commands;
-    private String type;
+    private String species;
 
-    public Animal(int id, String name, String birthDate, String commands, String type) {
+    public Animal(int id, String name, String birthDate, String commands, String species) {
         this.id = id;
         this.name = name;
         this.birthDate = birthDate;
         this.commands = commands;
-        this.type = type;
+        this.species = species;
     }
 
     public int getId() {
         return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getBirthDate() {
-        return birthDate;
-    }
-
-    public String getCommands() {
-        return commands;
-    }
-
-    public String getType() {
-        return type;
     }
 
     public void addCommand(String newCommand) {
@@ -39,6 +23,6 @@ public class Animal {
 
     @Override
     public String toString() {
-        return id + ", " + name + ", " + birthDate + ", " + commands + ", " + type;
+        return id + ", " + name + ", " + birthDate + ", " + commands + ", " + species;
     }
 }

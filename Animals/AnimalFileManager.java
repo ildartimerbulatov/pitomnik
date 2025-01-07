@@ -11,9 +11,16 @@ public class AnimalFileManager {
         try (BufferedReader reader = Files.newBufferedReader(Paths.get(FILE_PATH))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                if (line.startsWith("id,")) continue; // Пропустить заголовок
-
-                String[] parts = line.split(", ");
+                // Пропускаем заголовок
+                if (line.startsWith("id,")) {
+                    continue;
+                }
+    
+                // Очищаем строку от некорректных символов
+                line = line.replaceAll("[^\\x00-\\x7F]", "");  // Удаляем все не-ASCII символы
+    
+                // Убираем лишние пробелы и разделяем строку
+                String[] parts = line.trim().split("\\s*,\\s*");
                 if (parts.length == 5) {
                     animals.add(new Animal(
                         Integer.parseInt(parts[0]),
@@ -26,10 +33,12 @@ public class AnimalFileManager {
             }
         } catch (IOException e) {
             System.out.println("Ошибка при чтении файла: " + e.getMessage());
+        } catch (NumberFormatException e) {
+            System.out.println("Ошибка преобразования числа: " + e.getMessage());
         }
         return animals;
     }
-
+ 
     // Добавить животное в файл
     public static void addAnimal(Animal animal) {
         try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(FILE_PATH), StandardOpenOption.APPEND)) {
