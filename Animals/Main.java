@@ -45,4 +45,15 @@ public class Main {
                 animalRegistry.trainAnimal(scanner);
                 break;
             case 4:
-                animalRegistry.displayAnimal
+                animalRegistry.displayAnimalCount();
+                break;
+            case 5:
+                animalRegistry.updateAnimal(scanner);
+                break;
+            case 0:
+                break;
+            default:
+                System.out.println("Неверный выбор. Попробуйте снова.");
+        }
+    }
+}
