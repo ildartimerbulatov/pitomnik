@@ -34,9 +34,7 @@ public class Animal {
     }
 
     public void addCommand(String newCommand) {
-        if (!commands.contains(newCommand)) {
-            commands += ", " + newCommand;
-        }
+        this.commands += ", " + newCommand;
     }
 
     @Override
