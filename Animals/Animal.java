@@ -1,52 +1,62 @@
-import java.util.*;
+import java.time.LocalDate;
 
 public class Animal {
     private String id;
     private String name;
-    private String birthDate;
-    private List<String> commands;
+    private LocalDate birthDate;
+    private String commands;
     private String type;
 
-    // Конструктор класса
-    public Animal(String id, String name, String birthDate, String commands, String type) {
+    public Animal(String id, String name, LocalDate birthDate, String commands, String type) {
         this.id = id;
         this.name = name;
         this.birthDate = birthDate;
-        this.commands = new ArrayList<>(Arrays.asList(commands.split(",")));  // Список команд
+        this.commands = commands;
         this.type = type;
     }
 
-    // Геттеры
     public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getBirthDate() {
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public List<String> getCommands() {
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public String getCommands() {
         return commands;
+    }
+
+    public void setCommands(String commands) {
+        this.commands = commands;
     }
 
     public String getType() {
         return type;
     }
 
-    // Метод для добавления новой команды
-    public void addCommand(String command) {
-        if (command != null && !command.trim().isEmpty()) {
-            commands.add(command.trim());  // Добавляем команду в список
-        }
+    public void setType(String type) {
+        this.type = type;
     }
 
-    // Переопределение метода toString для корректной записи в файл
     @Override
     public String toString() {
-        return String.format("%s, %s, %s, %s, %s", id, name, birthDate, String.join(", ", commands), type);
+        return id + "," + name + "," + birthDate + "," + commands + "," + type;
     }
 }
