@@ -1,41 +1,32 @@
-// Файл: Animal.java
-public class Animal {
-    private int id;
-    private String name;
-    private String birthDate;
-    private String commands;
-    private String type;
+import java.util.List;
 
-    public Animal(int id, String name, String birthDate, String commands, String type) {
-        this.id = id;
-        this.name = name;
+public class Animal {
+    private int inventoryNumber;
+    private String species;
+    private String birthDate;
+    private List<String> commands;
+    private String nickname;
+    private String purpose;
+
+    public Animal(int inventoryNumber, String species, String birthDate, List<String> commands, String nickname, String purpose) {
+        this.inventoryNumber = inventoryNumber;
+        this.species = species;
         this.birthDate = birthDate;
         this.commands = commands;
-        this.type = type;
+        this.nickname = nickname;
+        this.purpose = purpose;
     }
 
-    public String toCSV() {
-        return id + "," + name + "," + birthDate + "," + commands + "," + type;
-    }
-
-    // Геттеры
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
+    public int getInventoryNumber() {
+        return inventoryNumber;
     }
 
     public String getBirthDate() {
         return birthDate;
     }
 
-    public String getCommands() {
-        return commands;
-    }
-
-    public String getType() {
-        return type;
+    @Override
+    public String toString() {
+        return inventoryNumber + "," + species + "," + birthDate + ",\"" + String.join(", ", commands) + "\"," + nickname + "," + purpose;
     }
 }
