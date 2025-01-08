@@ -1,4 +1,6 @@
-import java.util.*;
+import java.time.LocalDate;
+import java.util.Comparator;
+import java.util.List;
 
 public class AnimalRegistry {
     private List<Animal> animals;
@@ -6,20 +8,30 @@ public class AnimalRegistry {
 
     public AnimalRegistry() {
         this.animals = FileHandler.loadAnimals();
-        this.animalCounter = animals.size();
+        this.animalCounter = animals.stream()
+                                    .mapToInt(Animal::getInventoryNumber)
+                                    .max()
+                                    .orElse(0);
     }
 
     public void addAnimal(String species, String birthDate, List<String> commands, String nickname, String purpose) {
         int inventoryNumber = ++animalCounter;
         animals.add(new Animal(inventoryNumber, species, birthDate, commands, nickname, purpose));
+        FileHandler.saveAnimals(animals); // Сохраняем изменения в файл
     }
 
     public void deleteAnimal(int inventoryNumber) {
-        animals.removeIf(animal -> animal.getInventoryNumber() == inventoryNumber);
+        boolean removed = animals.removeIf(animal -> animal.getInventoryNumber() == inventoryNumber);
+        if (removed) {
+            System.out.println("Запись удалена.");
+            FileHandler.saveAnimals(animals); // Сохраняем изменения в файл
+        } else {
+            System.out.println("Запись с inventory_number = " + inventoryNumber + " не найдена.");
+        }
     }
 
     public void printAnimalsByBirthDate() {
-        animals.sort(Comparator.comparing(Animal::getBirthDate));
+        animals.sort(Comparator.comparing(animal -> LocalDate.parse(animal.getBirthDate())));
         animals.forEach(System.out::println);
     }
 
@@ -28,10 +40,11 @@ public class AnimalRegistry {
     }
 
     public int getAnimalCount() {
-        return animalCounter;
+        return animals.size();
     }
 
     public void saveData() {
-        FileHandler.saveAnimals(animals);
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'saveData'");
     }
 }
