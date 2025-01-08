@@ -10,21 +10,38 @@ public class AnimalService {
     private int totalAnimals = 0;
 
     public List<Animal> loadAnimals() throws IOException {
-        List<String[]> lines = Files.lines(Paths.get(FILE_PATH), java.nio.charset.StandardCharsets.UTF_8)
-            .map(line -> line.split(DELIMITER))
-            .collect(Collectors.toList());
-        lines.remove(0); // Remove header
+        List<String> lines = Files.readAllLines(Paths.get(FILE_PATH), java.nio.charset.StandardCharsets.UTF_8);
+    
+        if (lines.isEmpty()) {
+            System.out.println("Файл пуст. Животные не загружены.");
+            return new ArrayList<>();
+        }
+    
+        // Удаляем заголовок
+        lines.remove(0);
     
         List<Animal> animals = new ArrayList<>();
-        for (String[] line : lines) {
-            animals.add(new Animal(
-                line[0].trim(),
-                line[1].trim(),
-                LocalDate.parse(line[2].trim()), // Удаляем пробелы перед парсингом даты
-                line[3].trim(),
-                line[4].trim()
-            ));
+        for (String line : lines) {
+            String[] parts = line.split(DELIMITER);
+    
+            if (parts.length != 5) {
+                System.out.println("Неверный формат данных: " + line);
+                continue;
+            }
+    
+            try {
+                animals.add(new Animal(
+                    parts[0].trim(),
+                    parts[1].trim(),
+                    LocalDate.parse(parts[2].trim()), // Преобразуем дату
+                    parts[3].trim(),
+                    parts[4].trim()
+                ));
+            } catch (Exception e) {
+                System.out.println("Ошибка обработки строки: " + line);
+            }
         }
+    
         totalAnimals = animals.size();
         return animals;
     }
