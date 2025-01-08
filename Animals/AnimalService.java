@@ -22,7 +22,8 @@ public class AnimalService {
     
         List<Animal> animals = new ArrayList<>();
         for (String line : lines) {
-            String[] parts = line.split(DELIMITER);
+            // Разделяем строку с учётом кавычек
+            String[] parts = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
     
             if (parts.length != 5) {
                 System.out.println("Неверный формат данных: " + line);
@@ -30,13 +31,13 @@ public class AnimalService {
             }
     
             try {
-                animals.add(new Animal(
-                    parts[0].trim(),
-                    parts[1].trim(),
-                    LocalDate.parse(parts[2].trim()), // Преобразуем дату
-                    parts[3].trim(),
-                    parts[4].trim()
-                ));
+                String id = parts[0].trim();
+                String name = parts[1].trim();
+                LocalDate birthDate = LocalDate.parse(parts[2].trim());
+                String commands = parts[3].replaceAll("\"", "").trim(); // Убираем кавычки
+                String type = parts[4].trim();
+    
+                animals.add(new Animal(id, name, birthDate, commands, type));
             } catch (Exception e) {
                 System.out.println("Ошибка обработки строки: " + line);
             }
