@@ -32,6 +32,9 @@ public class Main {
                 case 5 -> deleteAnimal(scanner);
                 case 6 -> {
                     saveAnimalsToCSV();
+                    System.out.println("Изменения сохранены в файл.");
+                }
+                case 7 -> {
                     System.out.println("Выход из программы.");
                     return;
                 }
@@ -47,7 +50,8 @@ public class Main {
         System.out.println("3. Вывести всю таблицу");
         System.out.println("4. Вывести общее количество животных");
         System.out.println("5. Удалить запись");
-        System.out.println("6. Выйти");
+        System.out.println("6. Сохранить изменения в файл");
+        System.out.println("7. Выйти");
         System.out.print("Выберите опцию: ");
     }
 
@@ -61,7 +65,7 @@ public class Main {
                     isFirstLine = false; // Пропускаем первую строку
                     continue;
                 }
-    
+
                 String[] data = line.split(",");
                 int inventoryNumber = Integer.parseInt(data[0]);
                 String species = data[1];
@@ -69,7 +73,7 @@ public class Main {
                 List<String> commands = Arrays.asList(data[3].replace("\"", "").split(", "));
                 String nickname = data[4];
                 String purpose = data[5];
-    
+
                 animals.add(new Animal(inventoryNumber, species, birthDate, commands, nickname, purpose));
             }
         } catch (IOException | ParseException e) {
@@ -123,7 +127,7 @@ public class Main {
 
         System.out.println("\nЖивотные с датой рождения " + birthDateStr + ":");
         for (Animal animal : animals) {
-            if (sdf.format(animal.birthDate).equals(birthDateStr)) {
+            if (sdf.format(animal.getBirthDate()).equals(birthDateStr)) {
                 System.out.println(animal);
             }
         }
@@ -143,7 +147,7 @@ public class Main {
         int inventoryNumber = scanner.nextInt();
         scanner.nextLine(); // consume newline
 
-        animals.removeIf(animal -> animal.inventoryNumber == inventoryNumber);
+        animals.removeIf(animal -> animal.getInventoryNumber() == inventoryNumber);
         System.out.println("Запись удалена.");
     }
 }

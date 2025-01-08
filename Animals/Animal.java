@@ -2,13 +2,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-class Animal {
-    int inventoryNumber;
-    String species;
-    Date birthDate;
-    List<String> commands;
-    String nickname;
-    String purpose;
+public class Animal {
+    private int inventoryNumber; // Приватное поле
+    private String species;
+    private Date birthDate; // Приватное поле
+    private List<String> commands;
+    private String nickname;
+    private String purpose;
 
     // Конструктор
     public Animal(int inventoryNumber, String species, Date birthDate, List<String> commands, String nickname, String purpose) {

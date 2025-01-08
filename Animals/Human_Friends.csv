@@ -1,4 +1,3 @@
-inventory_number,species,birth_date,commands,nickname,purpose
 21,Dog,2020-05-10,"Bark", Fetch",Buddy
 22,Cat,2018-03-12,"Meow", Scratch",Whiskers
 23,Rabbit,2019-07-20,"Hop", Nibble",Flopsy
@@ -36,3 +35,4 @@ inventory_number,species,birth_date,commands,nickname,purpose
 17,Alpaca,2019-07-19,"Carry loads",Lulu,Pack
 18,Horse,2020-04-25,"Jump", Run",Blaze
 41,Horse,2025-01-01,"Run",Gold,Run
+38,Horse,2024-12-29,"Jump",Run,Pack
