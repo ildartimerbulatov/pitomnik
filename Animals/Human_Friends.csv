@@ -1,20 +1,38 @@
-id, name, birth_date, commands, вид
-id, name, birth_date, "commands", вид
-id, name, birth_date, ""commands"", вид
-id, name, birth_date, """commands""", вид
-1001, Собака, 2020-01-01, """"сидеть""", лежать"
-1002, Кошка, 2019-05-15, """"сидеть""", мяукать"
-1003, Хомяк, 2021-03-10, """бегать""", домашнее
-1004, Попугай, 2020-08-20, """"говорить""", летать"
-1005, Кролик, 2021-06-15, """"прыгать""", сидеть"
-1006, Морская свинка, 2022-02-01, """"бегать""", прятаться"
-1007, Фретка, 2019-11-11, """"играть""", бегать"
-1008, Шиншилла, 2020-12-05, """"прыгать""", спать"
-101, Лошадь, 2018-07-20, """"бежать""", прыгать"
-102, Осел, 2019-02-25, """"бежать""", стоять"
-103, Мул, 2016-05-10, """"нести""", ходить"
-104, Лама, 2020-03-15, """"бежать""", стоять"
-105, Слон, 2015-09-25, """"ходить""", поднимать"
-106, Яка, 2018-04-18, """"нести""", бежать"
-107, Альпака, 2019-07-30, """"бежать""", стоять"
-
+inventory_number,species,birth_date,commands,nickname,purpose
+21,Dog,2020-05-10,"Bark, Fetch",Buddy,pets
+22,Cat,2018-03-12,"Meow, Scratch",Whiskers,pets
+23,Rabbit,2019-07-20,"Hop, Nibble",Flopsy,pets
+24,Guinea Pig,2017-08-25,"Squeak, Run",Nibbler,pets
+25,Parrot,2016-10-30,"Talk, Fly",Polly,pets
+26,Hamster,2024-01-01,"Run, Sleep",Nibbles,pets
+27,Fish,2019-04-22,Swim,Bubbles,pets
+28,Turtle,2018-09-11,"Slow, Swim",Shelly,pets
+29,Ferret,2024-01-01,"Play, Dig",Fuzzy,pets
+30,Lizard,2016-11-22,"Climb, Sunbathe",Spike,pets
+31,Dog,2019-03-30,"Bark, Roll over",Rocky,pets
+32,Cat,2024-01-01,"Purr, Scratch",Mittens,pets
+33,Rabbit,2018-08-23,"Jump, Dig",Thumper,pets
+34,Guinea Pig,2017-05-21,"Squeak, Run",Cuddles,pets
+35,Parrot,2019-07-19,"Talk, Sing",Chirpy,pets
+36,Hamster,2020-04-25,"Run, Sleep",Chewy,pets
+37,Fish,2018-10-30,"Swim, Bubble",Goldie,pets
+38,Turtle,2019-06-12,"Slow, Hide",Tango,pets
+39,Ferret,2021-01-01,"Play, Explore",Ziggy,pets
+40,Lizard,2016-08-05,"Climb, Hide",Lizzy,pets
+1,Horse,2020-05-10,"Carry loads, Ride",Thunder,Pack
+3,Donkey,2019-07-20,Carry loads,Jack,Pack
+4,Mule,2017-08-25,Carry loads,Molly,Pack
+5,Llama,2016-10-30,Carry loads,Fluffy,Pack
+6,Pack Goat,2021-01-15,Carry loads,Billy,Pack
+7,Yak,2015-12-01,"Carry loads, Provide milk",Yeti,Pack
+8,Alpaca,2019-04-22,Carry loads,Coco,Pack
+9,Horse,2018-09-11,"Jump, Run",Spirit,Pack
+10,Donkey,2020-02-14,Carry loads,Eeyore,Pack
+12,Horse,2019-03-30,"Ride, Pull carts",Shadow,Pack
+13,Mule,2020-06-18,Carry loads,Socks,Pack
+14,Llama,2017-05-21,Carry loads,Paco,Pack
+15,Pack Goat,2018-08-23,Carry loads,Nibbles,Pack
+16,Yak,2016-11-30,Provide milk,Momo,Pack
+17,Alpaca,2019-07-19,Carry loads,Lulu,Pack
+18,Horse,2020-04-25,"Jump, Run",Blaze,Pack
+19,Donkey,2018-10-30,Carry loads,Daisy,Pack
