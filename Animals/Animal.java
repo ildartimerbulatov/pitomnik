@@ -1,14 +1,17 @@
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
-public class Animal {
-    private int inventoryNumber;
-    private String species;
-    private String birthDate;
-    private List<String> commands;
-    private String nickname;
-    private String purpose;
+class Animal {
+    int inventoryNumber;
+    String species;
+    Date birthDate;
+    List<String> commands;
+    String nickname;
+    String purpose;
 
-    public Animal(int inventoryNumber, String species, String birthDate, List<String> commands, String nickname, String purpose) {
+    // Конструктор
+    public Animal(int inventoryNumber, String species, Date birthDate, List<String> commands, String nickname, String purpose) {
         this.inventoryNumber = inventoryNumber;
         this.species = species;
         this.birthDate = birthDate;
@@ -17,16 +20,19 @@ public class Animal {
         this.purpose = purpose;
     }
 
+    // Геттер для inventoryNumber
     public int getInventoryNumber() {
         return inventoryNumber;
     }
 
-    public String getBirthDate() {
+    // Геттер для birthDate
+    public Date getBirthDate() {
         return birthDate;
     }
 
     @Override
     public String toString() {
-        return inventoryNumber + "," + species + "," + birthDate + ",\"" + String.join(", ", commands) + "\"," + nickname + "," + purpose;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return inventoryNumber + "," + species + "," + sdf.format(birthDate) + ",\"" + String.join(", ", commands) + "\"," + nickname + "," + purpose;
     }
 }

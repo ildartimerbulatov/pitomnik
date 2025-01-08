@@ -1,8 +1,22 @@
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.Scanner;
 
 public class Main {
+    private static final String CSV_FILE = "C:/Users/ildar/OneDrive/Desktop/pitomnik/Animals/Human_Friends.csv";
+    private static List<Animal> animals = new ArrayList<>();
+
     public static void main(String[] args) {
-        AnimalRegistry registry = new AnimalRegistry();
+        loadAnimalsFromCSV();
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -11,13 +25,13 @@ public class Main {
             scanner.nextLine(); // consume newline
 
             switch (choice) {
-                case 1 -> addAnimal(registry, scanner);
-                case 2 -> registry.printAnimalsByBirthDate();
-                case 3 -> registry.printAllAnimals();
-                case 4 -> System.out.println("Общее количество животных: " + registry.getAnimalCount());
-                case 5 -> deleteAnimal(registry, scanner);
+                case 1 -> addAnimal(scanner);
+                case 2 -> printAnimalsByBirthDate(scanner);
+                case 3 -> printAllAnimals();
+                case 4 -> printAnimalCount();
+                case 5 -> deleteAnimal(scanner);
                 case 6 -> {
-                    registry.saveData();
+                    saveAnimalsToCSV();
                     System.out.println("Выход из программы.");
                     return;
                 }
@@ -37,12 +51,56 @@ public class Main {
         System.out.print("Выберите опцию: ");
     }
 
-    private static void addAnimal(AnimalRegistry registry, Scanner scanner) {
+    private static void loadAnimalsFromCSV() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(CSV_FILE))) {
+            String line;
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            boolean isFirstLine = true; // Флаг для пропуска первой строки
+            while ((line = reader.readLine()) != null) {
+                if (isFirstLine) {
+                    isFirstLine = false; // Пропускаем первую строку
+                    continue;
+                }
+    
+                String[] data = line.split(",");
+                int inventoryNumber = Integer.parseInt(data[0]);
+                String species = data[1];
+                Date birthDate = sdf.parse(data[2]);
+                List<String> commands = Arrays.asList(data[3].replace("\"", "").split(", "));
+                String nickname = data[4];
+                String purpose = data[5];
+    
+                animals.add(new Animal(inventoryNumber, species, birthDate, commands, nickname, purpose));
+            }
+        } catch (IOException | ParseException e) {
+            System.out.println("Ошибка при чтении файла: " + e.getMessage());
+        }
+    }
+
+    private static void saveAnimalsToCSV() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(CSV_FILE))) {
+            for (Animal animal : animals) {
+                writer.write(animal.toString());
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println("Ошибка при записи в файл: " + e.getMessage());
+        }
+    }
+
+    private static void addAnimal(Scanner scanner) {
         System.out.print("Введите вид животного: ");
         String species = scanner.nextLine();
 
         System.out.print("Введите дату рождения (гггг-мм-дд): ");
-        String birthDate = scanner.nextLine();
+        String birthDateStr = scanner.nextLine();
+        Date birthDate;
+        try {
+            birthDate = new SimpleDateFormat("yyyy-MM-dd").parse(birthDateStr);
+        } catch (ParseException e) {
+            System.out.println("Неверный формат даты. Используйте формат гггг-мм-дд.");
+            return;
+        }
 
         System.out.print("Введите кличку: ");
         String nickname = scanner.nextLine();
@@ -53,16 +111,39 @@ public class Main {
         System.out.print("Введите команды (через запятую): ");
         List<String> commands = Arrays.asList(scanner.nextLine().split(", "));
 
-        registry.addAnimal(species, birthDate, commands, nickname, purpose);
+        int inventoryNumber = animals.size() + 1;
+        animals.add(new Animal(inventoryNumber, species, birthDate, commands, nickname, purpose));
         System.out.println("Животное добавлено.");
     }
 
-    private static void deleteAnimal(AnimalRegistry registry, Scanner scanner) {
+    private static void printAnimalsByBirthDate(Scanner scanner) {
+        System.out.print("Введите дату рождения (гггг-мм-дд): ");
+        String birthDateStr = scanner.nextLine();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        System.out.println("\nЖивотные с датой рождения " + birthDateStr + ":");
+        for (Animal animal : animals) {
+            if (sdf.format(animal.birthDate).equals(birthDateStr)) {
+                System.out.println(animal);
+            }
+        }
+    }
+
+    private static void printAllAnimals() {
+        System.out.println("\nВся таблица животных:");
+        animals.forEach(System.out::println);
+    }
+
+    private static void printAnimalCount() {
+        System.out.println("\nОбщее количество животных: " + animals.size());
+    }
+
+    private static void deleteAnimal(Scanner scanner) {
         System.out.print("Введите inventory_number животного для удаления: ");
         int inventoryNumber = scanner.nextInt();
         scanner.nextLine(); // consume newline
 
-        registry.deleteAnimal(inventoryNumber);
+        animals.removeIf(animal -> animal.inventoryNumber == inventoryNumber);
         System.out.println("Запись удалена.");
     }
 }
