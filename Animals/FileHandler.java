@@ -4,13 +4,19 @@ import java.util.Arrays;
 import java.util.List;
 
 public class FileHandler {
-    private static final String CSV_FILE = "Human_Friends.csv";
+    private static final String CSV_FILE = "C:/Users/ildar/OneDrive/Desktop/pitomnik/Animals/Human_Friends.csv";
 
     public static List<Animal> loadAnimals() {
         List<Animal> animals = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(CSV_FILE))) {
             String line;
+            boolean isFirstLine = true; // Флаг для пропуска первой строки
             while ((line = reader.readLine()) != null) {
+                if (isFirstLine) {
+                    isFirstLine = false; // Пропускаем первую строку (заголовок)
+                    continue;
+                }
+
                 String[] data = line.split(",");
                 int inventoryNumber = Integer.parseInt(data[0]);
                 String species = data[1];
@@ -29,6 +35,11 @@ public class FileHandler {
 
     public static void saveAnimals(List<Animal> animals) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(CSV_FILE))) {
+            // Записываем заголовок
+            writer.write("inventory_number,species,birth_date,commands,nickname,purpose");
+            writer.newLine();
+
+            // Записываем данные
             for (Animal animal : animals) {
                 writer.write(animal.toString());
                 writer.newLine();
